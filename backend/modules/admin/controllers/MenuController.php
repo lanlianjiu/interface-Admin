@@ -12,7 +12,6 @@ use backend\modules\admin\models\searches\MenuSearch;
 use mdm\admin\components\Helper;
 use Yii;
 use yii\web\NotFoundHttpException;
-
 class MenuController extends ApiController
 {
     /**
@@ -76,9 +75,13 @@ class MenuController extends ApiController
         return $this->findModel($id);
     }
 
+   
     public function actionAssignedMenu()
     {
-
+        $searchModel = new MenuSearch;
+        $assignedMenu = $searchModel->search(Yii::$app->request->getQueryParams());
+      
+        return $assignedMenu;
     }
 
     protected function findModel($id)
@@ -88,5 +91,15 @@ class MenuController extends ApiController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+     public function actionUserInfo()
+    {
+       
+        return [
+            'roles' => 'admin',
+            'code' => true,
+            'status' => 200
+        ];
     }
 }
