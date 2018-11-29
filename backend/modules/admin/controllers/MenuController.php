@@ -78,8 +78,8 @@ class MenuController extends ApiController
    
     public function actionAssignedMenu()
     {
-        $searchModel = new MenuSearch;
-        $assignedMenu = $searchModel->search(Yii::$app->request->getQueryParams());
+       
+        $assignedMenu = MenuHelper::getAssignedMenu(\Yii::$app->user->id);
       
         return $assignedMenu;
     }
@@ -95,11 +95,11 @@ class MenuController extends ApiController
 
      public function actionUserInfo()
     {
-       
-        return [
-            'roles' => 'admin',
-            'code' => true,
-            'status' => 200
-        ];
+       $info = ["data"=>['roles' =>  ["admin"],
+                        'code' => true,
+                        'status' => 200
+                        ]];
+      
+        return $info;
     }
 }
