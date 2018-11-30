@@ -10,6 +10,8 @@ use backend\controllers\ApiController;
 use backend\modules\admin\models\Menu;
 use backend\modules\admin\models\searches\MenuSearch;
 use mdm\admin\components\Helper;
+use mdm\admin\components\MenuHelper;
+
 use Yii;
 use yii\web\NotFoundHttpException;
 class MenuController extends ApiController
@@ -79,9 +81,8 @@ class MenuController extends ApiController
     public function actionAssignedMenu()
     {
        
-        $assignedMenu = MenuHelper::getAssignedMenu(\Yii::$app->user->id);
-      
-        return $assignedMenu;
+       return MenuHelper::getAssignedMenu(Yii::$app->user->getId());
+
     }
 
     protected function findModel($id)
