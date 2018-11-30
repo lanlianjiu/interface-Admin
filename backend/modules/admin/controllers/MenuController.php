@@ -103,4 +103,11 @@ class MenuController extends ApiController
       
         return $info;
     }
+
+     public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return true;
+    }
 }
