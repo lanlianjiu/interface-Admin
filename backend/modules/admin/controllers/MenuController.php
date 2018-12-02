@@ -80,8 +80,29 @@ class MenuController extends ApiController
    
     public function actionAssignedMenu()
     {
-       
-       return MenuHelper::getAssignedMenu(Yii::$app->user->getId());
+
+       $callback = function ($menu) {
+            $return = [
+                'id' => $menu['id'],
+                'label' => $menu['name'],
+                'url' => $menu['route'] ? $menu['route'] : '#',
+            ];
+            //处理我们的配置
+            if ($data = json_decode($menu['data'], true)) {
+                // visible
+                !empty($data['visible']) && $return['visible'] = $data['visible'];
+                //icon
+                !empty($data['icon']) && $return['icon'] = $data['icon'];
+                //other attribute e.g. class...
+                $return['options'] = $data;
+            }
+            //没配置图标的显示默认图标
+            empty($return['icon']) && $return['icon'] = 'fa fa-circle-o';
+            !empty($menu['children']) && $return['items'] = $menu['children'];
+            return $return;
+        };
+
+        return MenuHelper::getAssignedMenu(Yii::$app->user->getId(), null, $callback, true);
 
     }
 
