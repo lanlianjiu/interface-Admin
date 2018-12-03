@@ -82,12 +82,24 @@ class MenuController extends ApiController
     {
 
        $callback = function ($menu) {
+
+           $path = $menu['id'];
+
+           if(!empty($menu['route'])){
+
+                $strmenu = strrchr($menu['route'],'/');
+                $start = strripos($strmenu,'/',0);
+                $end = strripos($strmenu,'.',0);
+                $path = substr($strmenu,$start+1,($end-$start)-1);
+            }
+
             $return = [
                 'id' => $menu['id'],
                 'label' => $menu['name'],
                 'url' => $menu['route'] ? $menu['route'] : '#',
+                'path' => $path,
             ];
-            //处理我们的配置
+            
             if ($data = json_decode($menu['data'], true)) {
                 // visible
                 !empty($data['visible']) && $return['visible'] = $data['visible'];
@@ -96,9 +108,11 @@ class MenuController extends ApiController
                 //other attribute e.g. class...
                 $return['options'] = $data;
             }
-            //没配置图标的显示默认图标
+            
             empty($return['icon']) && $return['icon'] = 'fa fa-circle-o';
+
             !empty($menu['children']) && $return['items'] = $menu['children'];
+
             return $return;
         };
 
