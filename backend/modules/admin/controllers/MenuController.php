@@ -95,21 +95,22 @@ class MenuController extends ApiController
 
             $return = [
                 'id' => $menu['id'],
+                'pid' => $menu['parent'],
                 'label' => $menu['name'],
-                'url' => $menu['route'] ? $menu['route'] : '#',
+                'url' => $menu['route'] ? $menu['route'] : '',
                 'path' => $path,
             ];
             
             if ($data = json_decode($menu['data'], true)) {
-                // visible
+                
                 !empty($data['visible']) && $return['visible'] = $data['visible'];
-                //icon
+               
                 !empty($data['icon']) && $return['icon'] = $data['icon'];
-                //other attribute e.g. class...
+                
                 $return['options'] = $data;
             }
             
-            empty($return['icon']) && $return['icon'] = 'fa fa-circle-o';
+            empty($return['icon']) && $return['icon'] = '';
 
             !empty($menu['children']) && $return['items'] = $menu['children'];
 
