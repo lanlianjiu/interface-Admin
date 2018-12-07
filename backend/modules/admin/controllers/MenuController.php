@@ -121,21 +121,24 @@ class MenuController extends ApiController
 
             $return = [
                     'id'    => $menu['id'],
-                    'label' => $menu['name'],
-                    'url'   => $menu['route'] ? $menu['route'] : '#',
+                    'parent' => $menu['parent'],
+                    'component' => null,
+                    'name' => $menu['name'],
+                    'path'   => $menu['route'] ? $menu['route'] : '#',
                 ];
                 //处理我们的配置
                 if ($data = json_decode($menu['data'], true)) {
-                // visible
-                    !empty($data['visible']) && $return['visible'] = $data['visible'];
-                    //icon
+                
+                    !empty($data['hidden']) && $return['hidden'] = $data['hidden'];
+                    !empty($menu['title']) && $return['title'] =  $menu['title'];
+
                     !empty($data['icon']) && $return['icon'] = $data['icon'];
-                    //other attribute e.g. class...
-                    $return['options'] = $data;
+                   
+                    $return['meta'] = $data;
                 }
                 //没配置图标的显示默认图标
-                empty($return['icon']) && $return['icon'] = 'fa fa-circle-o';
-                !empty($menu['children']) && $return['items'] = $menu['children'];
+                empty($return['icon']) && $return['icon'] = '';
+                !empty($menu['children']) && $return['children'] = $menu['children'];
                 return $return;
         };
 
