@@ -81,43 +81,43 @@ class MenuController extends ApiController
     public function actionAssignedMenu()
     {
 
-       $callback = function ($menu) {
+       //$callback = function ($menu) {
 
-           $path = $menu['id'];
+        //    $path = $menu['id'];
 
-           if(!empty($menu['route'])){
+        //    if(!empty($menu['route'])){
 
-                $strmenu = strrchr($menu['route'],'/');
-                $start = strripos($strmenu,'/',0);
-                $end = strripos($strmenu,'.',0);
-                $path = substr($strmenu,$start+1,($end-$start)-1);
-            }
+        //         $strmenu = strrchr($menu['route'],'/');
+        //         $start = strripos($strmenu,'/',0);
+        //         $end = strripos($strmenu,'.',0);
+        //         $path = substr($strmenu,$start+1,($end-$start)-1);
+        //     }
 
-            $return = [
-                'id' => $menu['id'],
-                'pid' => $menu['parent'],
-                'label' => $menu['name'],
-                'url' => $menu['route'] ? $menu['route'] : '',
-                'path' => $path,
-            ];
+        //     $return = [
+        //         'id' => $menu['id'],
+        //         'pid' => $menu['parent'],
+        //         'label' => $menu['name'],
+        //         'url' => $menu['route'] ? $menu['route'] : '',
+        //         'path' => $path,
+        //     ];
             
-            if ($data = json_decode($menu['data'], true)) {
+        //     if ($data = json_decode($menu['data'], true)) {
                 
-                !empty($data['visible']) && $return['visible'] = $data['visible'];
+        //         !empty($data['visible']) && $return['visible'] = $data['visible'];
                
-                !empty($data['icon']) && $return['icon'] = $data['icon'];
+        //         !empty($data['icon']) && $return['icon'] = $data['icon'];
                 
-                $return['options'] = $data;
-            }
+        //         $return['options'] = $data;
+        //     }
             
-            empty($return['icon']) && $return['icon'] = '';
+        //     empty($return['icon']) && $return['icon'] = '';
 
-            !empty($menu['children']) && $return['items'] = $menu['children'];
+        //     !empty($menu['children']) && $return['items'] = $menu['children'];
 
-            return $return;
-        };
+        //     return $return;
+        // };
 
-        return MenuHelper::getAssignedMenu(Yii::$app->user->getId(), null, $callback, true);
+        return MenuHelper::getAssignedMenu(Yii::$app->user->getId());
 
     }
 
