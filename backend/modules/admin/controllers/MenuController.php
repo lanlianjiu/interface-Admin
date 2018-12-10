@@ -133,7 +133,7 @@ class MenuController extends ApiController
                     !empty($menu['title']) && $return['title'] =  $menu['title'];
                     !empty($data['icon']) && $return['icon'] = $data['icon'];
                     !empty($data['redirect']) && $return['redirect'] = $data['redirect'];
-                   
+                    !empty($data['openself']) && $return['openself'] = $data['openself'];
                     $return['meta'] = $data;
                 }
                 //没配置图标的显示默认图标
