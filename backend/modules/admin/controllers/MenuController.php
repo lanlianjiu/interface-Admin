@@ -131,8 +131,8 @@ class MenuController extends ApiController
                 
                     !empty($data['hidden']) && $return['hidden'] = $data['hidden'];
                     !empty($menu['title']) && $return['title'] =  $menu['title'];
-
                     !empty($data['icon']) && $return['icon'] = $data['icon'];
+                    !empty($data['redirect']) && $return['redirect'] = $data['redirect'];
                    
                     $return['meta'] = $data;
                 }
